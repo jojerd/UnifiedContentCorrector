@@ -5,7 +5,7 @@ Exchange 2013 Exchange 2016 and Exchange 2019 fix Unified Content folder locatio
 Exchange 2013, Exchange 2016, and Exchange 2019 if installed outside of the default directory (i.e. C:\Program Files) the UnifedContent Folder (Default file path: C:\Program Files\Microsoft\Exchange Server\V15\TransportRoles\data\Temp\UnifiedContent) is never updated or modifed to reflect an alternative installation location.
 
 
-This causes a problem with the probe the checks that directory for files that need to be cleaned up resulting in excessive disk storage being used for temporary files that should be getting deleted, and would be if the Exchange server was installed in the default location.
+This causes a problem with the probe that checks that directory for files that need to be cleaned up resulting in excessive disk storage being used for temporary files that should be getting deleted, and would be if the Exchange server was installed in the default location.
 
 
 This script corrects the Unified Content folder path so that the cleanup probe can check the directory for 
