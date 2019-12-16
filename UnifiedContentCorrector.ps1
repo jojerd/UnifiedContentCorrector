@@ -50,7 +50,7 @@ else {
 }
 # Test UnifiedContent file Path to confirm it exists before file modification.
 $TestUnifiedPath = Test-Path -Path $UnifiedContentPath -IsValid
-# If test path is successful, change working location, backup Antimalware.xml file, make required changes to file, save file with changes.
+# If test path is successful, change working location.
 if ($TestUnifiedPath -eq 'True') {
     Write-Host "UnifiedContent Folder path is correct, creating a backup of the original file before proceeding..." -ForegroundColor Green
     Start-Sleep -Seconds 3
@@ -88,7 +88,7 @@ else {
 }
 
 Clear-Host
-Write-Host 'Antimalware file has been modified to reflect the accurate location' -ForegroundColor Green
+Write-Host 'Antimalware file has been modified to reflect the accurate UnifiedContent folder location' -ForegroundColor Green
 Write-Host 'Please reboot the server for the changes to take affect...' -ForegroundColor Green
 Write-Host " "
 Read-Host 'Press Enter key to exit.'
