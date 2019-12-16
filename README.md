@@ -19,7 +19,7 @@ If neither condition above applies to your scenario then this is a non-issue.
 
 # Requirements
 
-Script is unsigned, so you will need to change the PowerShell execution policy to unrestricted temporarily. You can do that be running the following:
+Script is unsigned, so you will need to change the PowerShell execution policy to unrestricted temporarily. You can do that by running the following:
 
 Set-ExecutionPolicy unrestricted
 
