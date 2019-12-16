@@ -29,4 +29,6 @@ Set-ExecutionPolicy restricted
 
 The script needs to be executed as an Administrator. I do have it check to confirm that it's being executed with Administrative privileges, and if not it will terminate the script and notify you.
 
+# Caveat
 
+This will have to be run again after a CU upgrade as the Antimalware.xml file will be replaced during the upgrade procedure.
