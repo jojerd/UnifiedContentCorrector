@@ -5,7 +5,7 @@
     Email: jojerd@microsoft.com
 	Requires: Administrative Priveleges
 	Version History:
-	1.0 - 12/19/2019 - Initial Release
+	1.0 - 12/16/2019 - Initial Release
 
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
 	BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -61,6 +61,7 @@ if ($TestUnifiedPath -eq 'True') {
 else {
     Write-Error 'Unified Content Folder Path is not valid no changes will be made' -ErrorAction Stop
 }
+# Verify if backup directory exists, if so copy Antimalware.xml file.
 $xmlbackuppath = $AntimalwareFilePath + "\xmlbackup"
 if ([System.IO.Directory]::Exists($xmlbackuppath) -eq 'True') {
     Write-Host "Creating file backup..." -ForegroundColor Yellow
@@ -69,13 +70,12 @@ if ([System.IO.Directory]::Exists($xmlbackuppath) -eq 'True') {
     Copy-Item Antimalware.xml .\xmlbackup -Force
 }
 else {
+# If directory does not exist, create it and copy Antimalware.xml file.
     New-Item -Name xmlbackup -ItemType Directory
     Copy-Item Antimalware.xml .\xmlbackup -Force
 }   
-# Confirm backup is successfully saved.
+# Confirm backup is successfully saved, if so make xml file changes.
 $BackupFile = $AntimalwareFilePath + "\xmlbackup\Antimalware.xml"
-
-
 if ([System.IO.File]::Exists($BackupFile) -eq 'True') {
     Clear-Host
     Write-Host "Previous Antimalware file was backed up successfully, making required changes" -ForegroundColor Green
@@ -83,6 +83,7 @@ if ([System.IO.File]::Exists($BackupFile) -eq 'True') {
     $LoadFile | Where-Object { $_.Replace("D:\ExchangeTemp\TransportCts\UnifiedContent;C:\Windows\Temp\UnifiedContent;C:\Program Files\Microsoft\Exchange Server\V15\TransportRoles\data\Temp\UnifiedContent", "D:\ExchangeTemp\TransportCts\UnifiedContent;C:\Windows\Temp\UnifiedContent;$UnifiedContentPath") } | Set-Content .\Antimalware.xml
 }
 else {
+    # If not able to locate the backup file, stop script no changes will be made.
     Write-Error "Unable to confirm file backup, script will not continue..." -ErrorAction Stop
 }
 
