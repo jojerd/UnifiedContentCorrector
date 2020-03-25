@@ -142,7 +142,7 @@ Clear-Host
 Write-Host 'Checking to confirm file was updated as expected...'
 Start-Sleep -Seconds 3
 
-[xml]$LoadModifiedFile = ./Antimalware.xml
+[xml]$LoadModifiedFile = Get-Content .\Antimalware.xml
 if ($LoadModifiedFile.Definition.MaintenanceDefinition.ExtensionAttributes.CleanupFolderResponderFolderPaths -match $NewPath ) {
     Write-Host 'Antimalware file has been modified to reflect the accurate UnifiedContent folder location' -ForegroundColor Green
     Write-Host 'Please reboot the server for the changes to take affect...' -ForegroundColor Green
