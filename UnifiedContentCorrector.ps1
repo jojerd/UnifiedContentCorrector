@@ -7,7 +7,8 @@
 	Version History:
     1.0 - 12/16/2019 - Initial Release
     1.1 - 3/25/2020 - Fixed XML element mishandling, added file check to confirm changes were made, removed experimental network config plan to release at a later date.
-
+    1.2 - 3/25/2020 - Fixed XML loading behavior
+    
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
 	BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
 	NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
@@ -41,7 +42,7 @@ if ([System.IO.File]::Exists($AntimalwareFile) -eq 'True') {
     Clear-Host
     Write-Host "Located Antimalware.xml file to modify, loading file into memory..." -ForegroundColor Green
     Start-Sleep -Seconds 3
-    [xml]$LoadFile = Get-Content $AntimalwareFile
+    $LoadFile = [xml](Get-Content $AntimalwareFile)
     Clear-Host
 }
 # If script is not able to verify the UnifiedContent folder path, end script execution.
