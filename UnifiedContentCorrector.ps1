@@ -5,7 +5,8 @@
     Email: jojerd@microsoft.com
 	Requires: Administrative Priveleges
 	Version History:
-	1.0 - 12/16/2019 - Initial Release
+    1.0 - 12/16/2019 - Initial Release
+    1.1 - 3/25/2020 - Fixed XML element mishandling, added file check to confirm changes were made, removed experimental network config plan to release at a later date.
 
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
 	BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -20,56 +21,6 @@
     2.) You are actively utilizing the built in Antimalware agent. If you are not, then this behavior is a non-issue.
 
 #>
-param(
-    [switch]$AllExchangeServers
-)
-
-function UpdateAllExchangeServers {
-    # Check if script has been executed as an Administrator
-    $Admin = [bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544")
-    if ($Admin -eq 'True') {
-        Write-Host "Script was executed with elevated permissions, continuing..." -ForegroundColor Green
-        Start-Sleep -Seconds 3
-        Clear-Host
-    }
-    # If script is not executed as an Administrator, stop the script.
-    else {
-        Write-Error 'This Script needs to be executed under Powershell with Administrative Privileges...' -ErrorAction Stop
-    }
-    #Check for Exchange Management Shell, if found continue, if not add it.
-    $CheckSnapin = (Get-PSSession | Where-Object { $_.Name -eq "Microsoft.Exchange.Management.Powershell.E2010" } | Select-Object Name)
-    if ($CheckSnapin -like "*Exchange.Management.Powershell*") {
-        Write-Host "Exchange Snap-In already loaded, continuing...." -ForegroundColor Green
-    }
-    else {
-        Write-Host "Loading Exchange Snap-in, Please wait..."
-        Add-PSSnapin Microsoft.Exchange.Management.Powershell.E2010 -ErrorAction SilentlyContinue
-    }
-    $ADSite = [System.DirectoryServices.ActiveDirectory.ActiveDirectorySite]::GetComputerSite().Name
-    $ExchangeServers = Get-ExchangeServer | Where-Object { $_.IsHubTransportServer -eq $true -and $_.AdminDisplayVersion -match "^Version 15" -and ($_.Site -match "$ADSite") }
-    $Report = @()
-    if ($ExchangeServers.count -gt 0) {
-        foreach ($Server in $ExchangeServers) {
-            $EXServer = $Server.Name
-            Write-Host "Checking $EXServer..."
-            $InstallPath = $null
-
-            try {
-                $InstallPath = Invoke-Command -ComputerName $EXServer -ScriptBlock { $env:Exchangeinstallpath } -ErrorAction Stop
-            }
-            catch {
-                Write-Warning $_.Exception.Message
-                $InstallPath = "Unable to connect to server"
-            }
-            else {
-                Write-Error "Unable to locate any Exchange servers..." -ErrorAction Stop
-            }
-        }
-    }
-}
-
-if ($AllExchangeServers) { UpdateAllExchangeServers; exit; }
-
 # Check if script has been executed as an Administrator
 $Admin = [bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544")
 if ($Admin -eq 'True') {
@@ -139,11 +90,14 @@ else {
 }
 # Confirm that the Antimalware.xml file has been updated with the correct file path.
 Clear-Host
-Write-Host 'Checking to confirm file was updated as expected...'
+Write-Host 'Checking to confirm file was updated as expected...' -ForegroundColor Green
 Start-Sleep -Seconds 3
+Clear-Host
 
-[xml]$LoadModifiedFile = Get-Content .\Antimalware.xml
-if ($LoadModifiedFile.Definition.MaintenanceDefinition.ExtensionAttributes.CleanupFolderResponderFolderPaths -match $NewPath ) {
+$LoadModifiedFile = [xml](Get-Content .\Antimalware.xml)
+if ($LoadModifiedFile.Definition.MaintenanceDefinition.ExtensionAttributes.CleanupFolderResponderFolderPaths -eq $NewPath){
+    Clear-Host
+    Write-Host " "
     Write-Host 'Antimalware file has been modified to reflect the accurate UnifiedContent folder location' -ForegroundColor Green
     Write-Host 'Please reboot the server for the changes to take affect...' -ForegroundColor Green
     Write-Host " "
