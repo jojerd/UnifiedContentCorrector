@@ -152,7 +152,7 @@ if ($LoadModifiedFile.Definition.MaintenanceDefinition.ExtensionAttributes.Clean
 }
 else {
     Write-Error "File has not been modifed."
-    Read-Host ' Press Enter key to exit.'
+    Read-Host 'Press Enter key to exit.'
     Exit
 }
 
