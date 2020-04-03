@@ -194,7 +194,7 @@ function ListOfServers {
                     if ($LoadModifiedFile.Definition.MaintenanceDefinition.ExtensionAttributes.CleanupFolderResponderFolderPaths -eq $NewPath) {
                         Exit-PSSession
                         Write-Host "Antimalware file has been successfully modified" -ForegroundColor Green
-                        Write-Host "Please Reboot server for changes to take affect"
+                        Write-Host "Please Reboot server for changes to take effect" -ForegroundColor Yellow
                         
                     }
                     else {
@@ -304,7 +304,7 @@ if ($LoadModifiedFile.Definition.MaintenanceDefinition.ExtensionAttributes.Clean
     Clear-Host
     Write-Host " "
     Write-Host 'Antimalware file has been modified to reflect the accurate UnifiedContent folder location' -ForegroundColor Green
-    Write-Host 'Please reboot the server for the changes to take affect...' -ForegroundColor Green
+    Write-Host 'Please reboot the server for the changes to take effect...' -ForegroundColor Green
     Write-Host " "
     Read-Host  'Press Enter key to exit.'
     Exit
