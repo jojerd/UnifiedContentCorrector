@@ -29,7 +29,7 @@ Next after you have the ServerList.txt populated with the names of servers you w
 
 This will read the names from the ServerList.txt file and go through each server you specified and modify the Antimalware.xml file and correct the installation path so that Exchange can perform its automated cleanup function.
 
-Once the script completes you will have to reboot the servers that have been modified in order for the changes to take affect.
+Once the script completes you will have to reboot the servers that have been modified in order for the changes to take effect.
 
 # Requirements
 
