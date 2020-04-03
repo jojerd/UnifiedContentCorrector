@@ -194,6 +194,7 @@ function ListOfServers {
                     if ($LoadModifiedFile.Definition.MaintenanceDefinition.ExtensionAttributes.CleanupFolderResponderFolderPaths -eq $NewPath) {
                         Exit-PSSession
                         Write-Host "Antimalware file has been successfully modified" -ForegroundColor Green
+                        Write-Host "Please Reboot server for changes to take affect"
                         
                     }
                     else {
