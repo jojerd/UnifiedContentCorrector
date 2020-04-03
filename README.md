@@ -17,6 +17,20 @@ if both conditions are met.
 
 If neither condition above applies to your scenario then this is a non-issue.
 
+# How to use script switches
+
+.\UnifiedContentCorrector.ps1 -GenerateReport
+
+I've included a GenerateReport switch so that you can use pull a report of all of the servers as well as their installation directory within a given Active Directory site this will output to a CSV. You really only want to modify servers that have their install path outside of the default "C:\Program Files". Go through the output and then add the names to the included ServerList.txt document with 3 examples of how you should structure the input.
+
+Next after you have the ServerList.txt populated with the names of servers you want to modify you'll want to use the -ListOfServers switch. Example:
+
+.\UnifiedContentCorrector.ps1 -ListOfServers
+
+This will read the names from the ServerList.txt file and go through each server you specified and modify the Antimalware.xml file and correct the installation path so that Exchange can perform its automated cleanup function.
+
+Once the script completes you will have to reboot the servers that have been modified in order for the changes to take effect.
+
 # Requirements
 
 Script is unsigned, so you will need to change the PowerShell execution policy to unrestricted temporarily. You can do that by running the following:
