@@ -21,7 +21,7 @@ If neither condition above applies to your scenario then this is a non-issue.
 
 .\UnifiedContentCorrector.ps1 -GenerateReport
 
-I've included a GenerateReport switch so that you can use pull a report of all of the servers as well as their installation directory within a given Active Directory site this will output to a CSV. You really only want to modify servers that have their install path outside of the default "C:\Program Files". Go through the output and then add the names to the included ServerList.txt document with 3 examples of how you should structure the input.
+I've included a GenerateReport switch so that you can pull a report of all of the servers as well as their installation directory within a given Active Directory site this will output to a CSV. You really only want to modify servers that have their install path outside of the default "C:\Program Files". Go through the output and then add the names to the included ServerList.txt document with 3 examples of how you should structure the input.
 
 Next after you have the ServerList.txt populated with the names of servers you want to modify you'll want to use the -ListOfServers switch. Example:
 
