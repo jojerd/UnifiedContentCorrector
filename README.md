@@ -43,6 +43,12 @@ Set-ExecutionPolicy restricted
 
 The script needs to be executed as an Administrator. I do have it check to confirm that it's being executed with Administrative privileges, and if not it will terminate the script and notify you.
 
-# Caveat
+# Caveats
 
 This will have to be run again after a CU upgrade as the Antimalware.xml file will be replaced during the upgrade procedure.
+
+# Edge Role Instructions
+
+The switches above were designed for Exchange servers joined to a domain. If you are utilizing the Edge role you will not be able to utilize the Generate Report switch, and its also likely that the ListOfServers switches will be broken as well since you will be using a local admin account to log into the Edge server.
+
+Recommendations for Edge installations would be to run the script locally on the Edge server without any switches.
