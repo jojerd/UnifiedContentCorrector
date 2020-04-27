@@ -9,6 +9,7 @@
     1.1 - 3/25/2020 - Fixed XML element mishandling, added file check to confirm changes were made, removed experimental network config plan to release at a later date.
     1.2 - 3/25/2020 - Fixed XML loading behavior
     1.3 - 4/3/2020  - Added ability for script to change UnifiedContent folder paths for mutliple Exchange servers within a given Active Directory site.
+    1.3.1 - 4/27/2010 - Fixed Path Seperator issue with space in the new UnifedContent Path, also optimized XML Loading behavior to preserve whitespace.
     
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
 	BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
