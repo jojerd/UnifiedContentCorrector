@@ -144,7 +144,9 @@ function ListOfServers {
 
                     #Check to confirm file to modify exists.
                     if ([System.IO.File]::Exists($AntimalwareFile) -eq 'True') {
-                        $LoadFile = [xml](Get-Content $AntimalwareFile)
+                        $LoadFile = New-Object System.Xml.XmlDocument
+                        $LoadFile.PreserveWhitespace = $true
+                        $LoadFile.Load($AntimalwareFile)
                     }
                     # If script is not able to verify the Antimalware.xml file exit foreach loop and PSSession, return.
                     else {
@@ -178,7 +180,7 @@ function ListOfServers {
                     }   
                     # Confirm backup is successfully saved, if so make xml file changes.
                     $BackupFile = $AntimalwareFilePath + "\xmlbackup\Antimalware.xml" 
-                    [string]$NewPath = "D:\ExchangeTemp\TransportCts\UnifiedContent;C:\Windows\Temp\UnifiedContent;C:\Program Files\Microsoft\Exchange Server\V15\TransportRoles\data\Temp\UnifiedContent", "D:\ExchangeTemp\TransportCts\UnifiedContent;C:\Windows\Temp\UnifiedContent;$UnifiedContentPath"
+                    [string]$NewPath = "D:\ExchangeTemp\TransportCts\UnifiedContent;C:\Windows\Temp\UnifiedContent;$UnifiedContentPath"
                     if ([System.IO.File]::Exists($BackupFile) -eq 'True') {
                         $LoadFile.Definition.MaintenanceDefinition.ExtensionAttributes.CleanupFolderResponderFolderPaths = $NewPath
                         $LoadFile.Save((Resolve-Path "Antimalware.xml")) 
@@ -218,7 +220,7 @@ function ListOfServers {
       
     }
     else {
-        # Error for ServerList.txt either being emppty or inaccessible.
+        # Error for ServerList.txt either being empty or inaccessible.
         Write-Error "Server list appears to be emtpy, check file to make sure there are servers in the list" -ErrorAction Stop
     }
     
@@ -246,7 +248,9 @@ if ([System.IO.File]::Exists($AntimalwareFile) -eq 'True') {
     Clear-Host
     Write-Host "Located Antimalware.xml file to modify, loading file into memory..." -ForegroundColor Green
     Start-Sleep -Seconds 3
-    $LoadFile = [xml](Get-Content $AntimalwareFile)
+    $LoadFile = New-Object System.Xml.XmlDocument
+    $LoadFile.PreserveWhitespace = $true
+    $LoadFile.Load($AntimalwareFile)
     Clear-Host
 }
 # If script is not able to verify the UnifiedContent folder path, end script execution.
@@ -281,7 +285,7 @@ else {
 }   
 # Confirm backup is successfully saved, if so make xml file changes.
 $BackupFile = $AntimalwareFilePath + "\xmlbackup\Antimalware.xml"
-[string]$NewPath = "D:\ExchangeTemp\TransportCts\UnifiedContent;C:\Windows\Temp\UnifiedContent;C:\Program Files\Microsoft\Exchange Server\V15\TransportRoles\data\Temp\UnifiedContent", "D:\ExchangeTemp\TransportCts\UnifiedContent;C:\Windows\Temp\UnifiedContent;$UnifiedContentPath"
+[string]$NewPath = "D:\ExchangeTemp\TransportCts\UnifiedContent;C:\Windows\Temp\UnifiedContent;$UnifiedContentPath"
 if ([System.IO.File]::Exists($BackupFile) -eq 'True') {
     Clear-Host
     Write-Host "Previous Antimalware file was backed up successfully, making required changes" -ForegroundColor Green
